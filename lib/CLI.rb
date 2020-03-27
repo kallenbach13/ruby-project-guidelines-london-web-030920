@@ -48,7 +48,8 @@ class CommandLineInterface
     puts "6. Find movie, quote or character"
     puts "7. Find or create quote"
     puts "8. Delete movie, quote or character"
-    puts "9. To try out the quiz!"
+    puts "9. Update quote"
+    puts "10. To try out the quiz!"
     
     puts "exit or x - To exit application"
   end
@@ -83,7 +84,9 @@ class CommandLineInterface
       find_or_create
     when "8" #delete
       delete
-    when "9" #delete
+    when "9" #update 
+      update
+    when "10" #quiz
       run_quiz 
     when "exit"
       puts ""
@@ -171,6 +174,29 @@ def find_or_create
       puts ""
   end
   inner_greeting
+end
+
+def update 
+  puts ""
+  puts "Please type in the quote you would like to update."
+  puts ""
+  quote = gets.chomp
+  puts ""
+  found_quote = Quote.all.find_by(line: quote)
+  if found_quote 
+    puts "This quote is in our system! What would you like to update it to?"
+  puts ""
+  updated = gets.chomp
+  found_quote.update(line: updated)
+  puts ""
+  puts "Your quote is now '#{updated}''"
+  puts ""
+  else 
+    puts ""
+    puts "sorry this is not in our system, please retry!"
+    puts ""
+    update
+  end
 end
 
 def create_or_find_character_and_quote(movie)
