@@ -31,6 +31,7 @@ class CommandLineInterface
     puts "Please type your next command."
     puts ""
     command = gets.chomp
+    system("clear")
     user_command(command) 
   end
 
@@ -38,7 +39,7 @@ class CommandLineInterface
     puts ""
     puts "COMMAND LIST"
     puts "-------------"
-    puts "l - List all commands"
+    puts "list - List all commands"
     puts "1. List all movies"
     puts "2. List all quotes"
     puts "3. List all characters"
@@ -55,7 +56,7 @@ class CommandLineInterface
   def user_command(command)
     case command
 
-    when "l"
+    when "list"
       list_all_commands
     when "1" #movie
       row_title("movies")
@@ -166,6 +167,8 @@ def find_or_create
       puts "This movie is now in our database, please type the character who says the quote."
       puts ""
       create_or_find_character_and_quote(new_movie)
+      puts "Thats all now in our database!"
+      puts ""
   end
   inner_greeting
 end
@@ -202,28 +205,29 @@ def display_characters
   row_title("characters")
       puts Character.all.map{|c| c.name}
       puts ""
-      puts "For more character options press 'o' or press any other key to exit."
+      puts "For more character options press 'c' or press any other key to exit."
       character_options
 end
 
 def character_options
     option = gets.chomp
     puts ""
-      if option == "o"
-      puts "For all male characters press 'm'" 
-      puts "For all female characters press 'f'"
-      puts "For longest name press 'l'"
-      puts "For shortest name press 's'"
+      if option == "c"
+      puts "1. For all male characters press" 
+      puts "2. For all female characters press"
+      puts "3. For longest name press"
+      puts "4. For shortest name press"
+      puts ""
       character_option = gets.chomp
       puts ""
       case character_option
-        when "m"
+        when "1"
         puts Character.all_male
-        when "f"
+        when "2"
         puts Character.all_female
-        when "l"
+        when "3"
         puts Character.longest_name
-        when "s"
+        when "4"
         puts Character.shortest_name   
       end
       puts ""
@@ -265,18 +269,27 @@ end
       quote = gets.chomp
       found_quote = Quote.find_by(line: quote)
       found_quote.delete
+      puts "" 
+      puts "Thats now deleted!"
+      puts ""
     when "2"
       puts "" 
       puts "Please put in the movie you would like to delete."
       movie = gets.chomp
       found_movie = Movie.find_by(title: movie)
       found_movie.delete
+      puts "" 
+      puts "Thats now deleted!"
+      puts ""
     when "3"
       puts "" 
       puts "Please put in the character you would like to delete."
       character = gets.chomp
       found_character = Character.find_by(name: character)
       found_character.delete
+      puts "" 
+      puts "Thats now deleted!"
+      puts ""
     end
   end
 
@@ -306,6 +319,7 @@ end
       puts "Put your answer here:"
       puts ""
       movie_title = gets.chomp
+      system("clear")
       puts ""
       found_movie = Movie.find_by(title: movie_title)
       if !found_movie
@@ -331,11 +345,11 @@ end
     end
         puts ""
         puts ""
-      if user_points = 0
-        puts "-----------------------------------------------------------"
-        puts "The worst effort ever! Your final score was #{user_points} out of 10! Try again!"
-        puts "-----------------------------------------------------------"
-      elsif user_points <= 5
+      # if user_points = 0
+      #   puts "-----------------------------------------------------------"
+      #   puts "The worst effort ever! Your final score was #{user_points} out of 10! Try again!"
+      #   puts "-----------------------------------------------------------"
+      if user_points <= 5
         puts "-----------------------------------------------------------"
         puts "Horrible effort your final score was #{user_points} out of 10! Try again!"
         puts "-----------------------------------------------------------"
